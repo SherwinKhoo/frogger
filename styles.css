@@ -25,9 +25,14 @@ h1 {
 }
 
 .river {
-  background-color: aqua;
+  background-color: grey;
 }
 
 .frogIsHere {
   background-color: green;
+}
+
+.frontIsHere,
+.backIsHere {
+  background-color: black;
 }
