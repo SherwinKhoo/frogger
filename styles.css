@@ -28,11 +28,12 @@ h1 {
   background-color: grey;
 }
 
-.frogIsHere {
+#frog {
   background-color: green;
 }
 
 .frontIsHere,
-.backIsHere {
+.backIsHere,
+.carIsHere {
   background-color: black;
 }
