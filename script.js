@@ -316,27 +316,37 @@ $(() => {
     if (timer > 0) {
       timer -= 1;
       $("span").text(timer);
-    } else {
-      $("h4").text("Ooooof... Refresh page to reset.");
     }
   };
+
+  //////////////////////////////////////////////////
+  //////////  collision  ///////////////////////////
+  //////////////////////////////////////////////////
+
+  // codes moved to win / loss conditions
 
   //////////////////////////////////////////////////
   //////////  win / loss conditions  ///////////////
   //////////////////////////////////////////////////
 
-  // win
-  const winCondition = () => {
-    if ($(".frog").hasClass("end")) {
-      clearInterval(moveNPC);
-      clearInterval(ticktock);
-    }
+  // freeze everything
+  const freeze = () => {
+    clearInterval(moveNPC);
+    clearInterval(ticktock);
+    $("body").off("keyup", movementFrog);
   };
 
-  const lossCondition = () => {
-    if ($(".frog").hasClass("vehicleIsHere") === true || timer === 0) {
-      clearInterval(moveNPC);
-      clearInterval(ticktock);
+  // end game
+  const endConditions = () => {
+    if ($(".frog").hasClass("end")) {
+      freeze();
+      $("h4").text("Ooooof... Should have made the game harder!");
+    } else if ($(".frog").hasClass("vehicleIsHere") === true) {
+      freeze();
+      $("h4").text("Ooooof... We're going to need a cleanup on isle 5!");
+    } else if (timer === 0) {
+      freeze();
+      $("h4").text("Ooooof... Time's up!");
     }
   };
 
@@ -352,11 +362,10 @@ $(() => {
   //////////  window onload  ///////////////////////
   //////////////////////////////////////////////////
 
-  $("body").keyup(movementFrog);
+  $("body").on("keyup", movementFrog);
   let moveNPC = setInterval(movementNPC, 1000);
   let ticktock = setInterval(countdown, 1000);
-
-  // setInterval(() => {
-  //   movementMOVE();
-  // }, 1000);
+  setInterval(() => {
+    endConditions();
+  }, 1);
 });
