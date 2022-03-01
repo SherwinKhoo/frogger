@@ -46,8 +46,7 @@ for (let i = x; i < x * (Math.floor(y / 2) - 1) + x; i++) {
 // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
 // https://www.w3schools.com/jquery/event_keypress.asp
 
-let whereIsFrog = -Math.ceil(x / 2); //  index position in the $squares array, from 0 to (x * y)
-
+let whereIsFrog = x * (y - 1) + Math.floor(x / 2); //  index position in the $squares array, from 0 to (x * y)
 const movementFrog = (event) => {
   $squares.eq(whereIsFrog).removeAttr("id"); //  remove class from previous position, otherwise, might as well be playing Nokia Snake instead
   switch (event.key) {
@@ -290,6 +289,20 @@ const movementNPC = () => {
 //////////  timer  ///////////////////////////////
 //////////////////////////////////////////////////
 
+let timer = 30;
+const countdown = () => {
+  if (timer > 0) {
+    timer -= 1;
+    $("h4").text(`Timer = ${timer}`);
+  } else {
+    $("h4").text("Ooooof... Refresh page to reset.");
+  }
+};
+
+//////////////////////////////////////////////////
+//////////  collision  ///////////////////////////
+//////////////////////////////////////////////////
+
 //////////////////////////////////////////////////
 //////////  river  ///////////////////////////////
 //////////////////////////////////////////////////
@@ -303,4 +316,7 @@ $(() => {
   setInterval(() => {
     movementNPC();
   }, 1000);
+  setInterval(() => {
+    countdown();
+  }, 100);
 });
