@@ -26,7 +26,16 @@ h4 {
 }
 
 .river {
-  background-color: grey;
+  background-color: aqua;
+}
+
+.logBigIsHere,
+.logSmallIsHere {
+  background-color: brown;
+}
+
+.turtleIsHere {
+  background-color: lime;
 }
 
 .frog {
