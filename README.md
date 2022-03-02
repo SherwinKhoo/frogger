@@ -14,8 +14,12 @@ Lessons Learnt
 
 1. Google is your best friend; you still need to ask the right questions.
 2. Be mindful of integer values and setting limits.
+3. There is always a more elegant way to accomplish the goal; 75% of this can be shortened.
 
-Improvement Needed
+Improvements for the Future
 
-1. Tile set + proper sprites.
-2. Clean up the code; this can be done in way fewer lines.
+1. Use a tile set and sprites.
+2. Use canvas method in HTML instead of controlling via classes and listening for intersecting / non-intersecting classes.
+3. Clean up the code; this can be done in way fewer lines.
+4. Each tick of the setInterval is very large (1000ms); movement after the calculation is done but before it animates will result in falling off the floating object.
+5. Multi-player or against an AI trained with machine learning (using a recursive algorithm).
