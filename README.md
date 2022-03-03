@@ -15,12 +15,12 @@ Technologies Used
 Motivation
 
 1. Reinforce understanding of Javascript and CSS
-2. Potential addition to portfolio.
-3. being a "gamer, and having played computer games that someone else made since the 90s, it's nice to finally create one for a change, albeit a clone of a classic game.
+2. Add to portfolio.
+3. Being a "gamer, and having played computer games that someone else made since the 90s, it's nice to finally create one for a change, albeit a clone of a classic game.
 
 Approach Taken
 
-1. Build a grid using <div>s.
+1. Build a grid.
    Created with Javascript instead of hardcoded into the HTML.
    Parameters to control number of "pixels" and individual "pixel" size.
    Makes furture grid changes easier.
@@ -44,7 +44,7 @@ Approach Taken
    Listen for an end game condition.
 
 6. Determine "collision" mechanics.
-   Check if an element has two secific classes.
+   Check if an element has two specific classes.
    Check if an element has a specific class but not another class.
 
 7. Determine end game conditions.

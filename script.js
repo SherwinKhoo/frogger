@@ -22,9 +22,11 @@ $(() => {
   // give all the rows a class
 
   for (let i = 0; i < x; i++) {
-    if (i % 2 === 1) {
-      $squares.eq(i).addClass("end");
-    } else {
+    $squares.eq(i).addClass("end");
+  }
+
+  for (let i = 0; i < x; i++) {
+    if (i % 2 === 0) {
       $squares.eq(i).addClass("endAlt");
     }
   }
@@ -57,17 +59,6 @@ $(() => {
       $(".road").eq(i).addClass("right"); // even numbered rows [2] and [4] have cars moving from right
     }
   }
-
-  // // define rows which will have water assets
-  // for (let i = 0; i < $(".river").length; i++) {
-  //   if (i < x) {
-  //     $(".river").eq(i).addClass("bigLog"); // top row [0] has big logs moving from the left
-  //   } else if (Math.floor(i / x) % 2 === 1) {
-  //     $(".river").eq(i).addClass("smallLog"); // odd numbered rows [1] and [3] have small logs moving from the left
-  //   } else {
-  //     $(".river").eq(i).addClass("turlte"); // remaining rows [2] and [4] have turtles moving from the right
-  //   }
-  // }
 
   // define rows which will have water assets
   for (let i = 0; i < $(".river").length; i++) {
@@ -122,10 +113,18 @@ $(() => {
 
   let whereIsFrog = x * (y - 1) + Math.floor(x / 2); //  index position in the $squares array, from 0 to (x * y)
   const movementFrog = (event) => {
-    $squares.removeClass("frog"); //  remove id from previous position, otherwise, might as well be playing Nokia Snake instead
+    $squares.removeClass("frog"); //  remove id from previous position, otherwise, might as well be playing Nokia Snake instead)
+
     switch (event.key) {
       case "ArrowUp":
-        if (whereIsFrog > x && whereIsFrog < 2 * x && whereIsFrog % 2 === 0) {
+        if (
+          whereIsFrog > x &&
+          whereIsFrog < 2 * x &&
+          whereIsFrog % 2 === 0 &&
+          !$(".end")
+            .eq(whereIsFrog - x)
+            .hasClass("endFrog")
+        ) {
           whereIsFrog -= x;
         } else if (whereIsFrog >= 2 * x) {
           // cannot move up if on the top row of the grid
@@ -152,6 +151,7 @@ $(() => {
         break; // ALWAYS REMEMBER TO BREAK!!
     }
     $squares.eq(whereIsFrog).addClass("frog");
+    console.log(whereIsFrog);
   };
 
   //////////////////////////////////////////////////
@@ -615,16 +615,30 @@ $(() => {
     clearInterval(ticktock);
     clearInterval(followLog);
     clearInterval(followTurtle);
+    clearInterval(itsTheEnd);
     $("body").off("keyup", movementFrog);
   };
+
+  let lives = 5;
 
   // riding turtles
   const withTurtle = () => {
     if ($(".frog").hasClass("turtleIsHere")) {
       if (Math.floor(whereIsFrog / x) !== Math.floor((whereIsFrog - 1) / x)) {
-        $squares.removeClass("frog");
-        freeze();
-        $("h4").text("Ooooof... Feeling shellshocked?");
+        lives -= 1;
+        if (lives > 0) {
+          $(".frog").addClass("deadFrog");
+          $(".deadFrog").removeClass("frog");
+          $squares.eq(x * (y - 1) + Math.floor(x / 2)).addClass("frog");
+          whereIsFrog = x * (y - 1) + Math.floor(x / 2);
+          $("body").removeClass(".deadFrog");
+          timer = 30;
+        } else {
+          freeze();
+          $("h4").text("Ooooof... Feeling shellshocked?");
+        }
+        console.log(`Lives = ${lives}`);
+        console.log(`Home = ${$("body .endFrog").length}`);
       } else {
         $squares.removeClass("frog");
         whereIsFrog -= 1;
@@ -640,9 +654,20 @@ $(() => {
       $(".frog").hasClass("logBigIsHere")
     ) {
       if (Math.floor(whereIsFrog / x) !== Math.floor((whereIsFrog + 1) / x)) {
-        $squares.removeClass("frog");
-        freeze();
-        $("h4").text("Ooooof... The console has logged your demise!");
+        lives -= 1;
+        if (lives > 0) {
+          $(".frog").addClass("deadFrog");
+          $(".deadFrog").removeClass("frog");
+          $squares.eq(x * (y - 1) + Math.floor(x / 2)).addClass("frog");
+          whereIsFrog = x * (y - 1) + Math.floor(x / 2);
+          $("body").removeClass(".deadFrog");
+          timer = 30;
+        } else {
+          freeze();
+          $("h4").text("Ooooof... The console has logged your demise!");
+        }
+        console.log(`Lives = ${lives}`);
+        console.log(`Home = ${$("body .endFrog").length}`);
       } else {
         $squares.removeClass("frog");
         whereIsFrog += 1;
@@ -655,35 +680,74 @@ $(() => {
   const endConditions = () => {
     if ($(".frog").hasClass("end")) {
       // reach the end zone
-      $(".frog").addClass("endFrog");
-      $(".endFrog").removeClass("frog");
-      freeze();
-      $("h4").text("Ooooof... Should have made the game harder!");
+      if (lives > 0) {
+        $(".frog").addClass("endFrog");
+        $(".endFrog").removeClass("frog");
+        $squares.eq(x * (y - 1) + Math.floor(x / 2)).addClass("frog");
+        whereIsFrog = x * (y - 1) + Math.floor(x / 2);
+      } else {
+        freeze();
+        $("h4").text("Ooooof... Should have made the game harder!");
+      }
+      console.log(`Lives = ${lives}`);
+      console.log(`Home = ${$("body .endFrog").length}`);
     } else if ($(".frog").hasClass("vehicleIsHere") === true) {
       // hit by vehicle
-      freeze();
-      $("h4").text("Ooooof... We're going to need a cleanup on aisle 5!");
+      lives -= 1;
+      if (lives > 0) {
+        $(".frog").addClass("deadFrog");
+        $(".deadFrog").removeClass("frog");
+        $squares.eq(x * (y - 1) + Math.floor(x / 2)).addClass("frog");
+        whereIsFrog = x * (y - 1) + Math.floor(x / 2);
+        $("body").removeClass(".deadFrog");
+        timer = 30;
+      } else {
+        freeze();
+        $("h4").text("Ooooof... We're going to need a cleanup on aisle 5!");
+      }
+      console.log(`Lives = ${lives}`);
+      console.log(`Home = ${$("body .endFrog").length}`);
     } else if (timer === 0) {
       // run out of time
-      freeze();
-      $("h4").text("Ooooof... Time's up!");
+      lives -= 1;
+      if (lives > 0) {
+        $(".frog").addClass("deadFrog");
+        $(".deadFrog").removeClass("frog");
+        $squares.eq(x * (y - 1) + Math.floor(x / 2)).addClass("frog");
+        whereIsFrog = x * (y - 1) + Math.floor(x / 2);
+        $("body").removeClass(".deadFrog");
+        timer = 30;
+      } else {
+        freeze();
+        $("h4").text("Ooooof... Time's up!");
+      }
+      console.log(`Lives = ${lives}`);
+      console.log(`Home = ${$("body .endFrog").length}`);
     } else if ($(".frog").hasClass("river") && !$(".frog").hasClass("float")) {
       // stepping into water
-      freeze();
-      $("h4").text("Ooooof... Apparently, this frog cannot swim!");
+      lives -= 1;
+      if (lives > 0) {
+        $(".frog").addClass("deadFrog");
+        $(".deadFrog").removeClass("frog");
+        $squares.eq(x * (y - 1) + Math.floor(x / 2)).addClass("frog");
+        whereIsFrog = x * (y - 1) + Math.floor(x / 2);
+        $("body").removeClass(".deadFrog");
+        timer = 30;
+      } else {
+        freeze();
+        $("h4").text("Ooooof... Apparently, this frog cannot swim!");
+      }
+      console.log(`Lives = ${lives}`);
+      console.log(`Home = ${$("body .endFrog").length}`);
     }
   };
-
-  //////////////////////////////////////////////////
-  //////////  window onload  ///////////////////////
-  //////////////////////////////////////////////////
 
   $("body").on("keyup", movementFrog);
   let moveNPC = setInterval(movementNPC, 1000);
   let ticktock = setInterval(countdown, 1000);
   let followLog = setInterval(withLog, 1000);
   let followTurtle = setInterval(withTurtle, 1000);
-  setInterval(() => {
+  let itsTheEnd = setInterval(() => {
     endConditions();
   }, 1);
 });
