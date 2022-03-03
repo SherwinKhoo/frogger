@@ -12,11 +12,51 @@ Technologies Used
 2. CSS
 3. HTML
 
+Motivation
+
+1. Reinforce understanding of Javascript and CSS
+2. Potential addition to portfolio.
+3. being a "gamer, and having played computer games that someone else made since the 90s, it's nice to finally create one for a change, albeit a clone of a classic game.
+
+Approach Taken
+
+1. Build a grid using <div>s.
+   Created with Javascript instead of hardcoded into the HTML.
+   Parameters to control number of "pixels" and individual "pixel" size.
+   Makes furture grid changes easier.
+
+2. Add **classes** to all "pixels".
+   Makes life a lot easier when watching the classes change with each tick of setInterval().
+   Use of **loops** and mathematical formulae to calculate row and column positions.
+   Rows calculated first => numerator of the result of total "pixels" divided by width.
+   Columns calculated after => remainder of the result of total "pixels" divided by width.
+
+3. Use a **switch cases** to determine if movement via arrow keys are valid for the current position.
+   Restricts movement to valid "pixels".
+
+4. Assign further classes as specific identifiers.
+   Used to call in specific images.
+   For example, which "pixel" should show a frog, and which should show a turtle.
+
+5. Use **setInterval()** to control game mechanics, with varying ticks for different purposes.
+   Create a countdown timer.
+   Move assets such as vehicles and "floating" objects.
+   Listen for an end game condition.
+
+6. Determine "collision" mechanics.
+   Check if an element has two secific classes.
+   Check if an element has a specific class but not another class.
+
+7. Determine end game conditions.
+   Build upon the collision mechanics.
+   Use **callback functions**.
+   Freeze the game with **clearInterval()** when an end condition is met.
+
 Lessons Learnt
 
 1. Setting initial integer values and setting limits for said values.
-2. There is always a more elegant way to accomplish the goal; 75% of this can be shortened.
-3. Using classes doesn't seem like the most efficient way to handle animation.
+2. There is always a more elegant solution; 75% of this can be shortened.
+3. Using classes only creates the illusion of animation; it doesn't seem to be the most efficient way to handle animation.
 
 Improvements for the Future
 
