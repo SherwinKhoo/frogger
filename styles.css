@@ -3,7 +3,8 @@ body {
 }
 
 h1,
-h4 {
+h4,
+h5 {
   text-align: center;
   color: silver;
 }
@@ -115,4 +116,11 @@ img {
 .carD {
   background-image: url("images/car_d.png");
   background-size: contain;
+}
+
+button {
+  text-align: center;
+  margin: 50px auto;
+  display: flex;
+  display: grid;
 }

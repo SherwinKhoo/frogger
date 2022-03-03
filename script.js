@@ -598,6 +598,7 @@ $(() => {
   //////////////////////////////////////////////////
 
   let timer = 30;
+  $("#timer").text(timer);
   const countdown = () => {
     if (timer > 0) {
       timer -= 1;
@@ -617,15 +618,18 @@ $(() => {
     clearInterval(followTurtle);
     clearInterval(itsTheEnd);
     $("body").off("keyup", movementFrog);
+    $("body").removeClass(".deadFrog");
   };
 
   let lives = 5;
+  $("#lives").text(`${lives}`);
 
   // riding turtles
   const withTurtle = () => {
     if ($(".frog").hasClass("turtleIsHere")) {
       if (Math.floor(whereIsFrog / x) !== Math.floor((whereIsFrog - 1) / x)) {
         lives -= 1;
+        $("#lives").text(`${lives}`);
         if (lives > 0) {
           $(".frog").addClass("deadFrog");
           $(".deadFrog").removeClass("frog");
@@ -633,6 +637,7 @@ $(() => {
           whereIsFrog = x * (y - 1) + Math.floor(x / 2);
           $("body").removeClass(".deadFrog");
           timer = 30;
+          $("#timer").text(timer);
         } else {
           freeze();
           $("h4").text("Ooooof... Feeling shellshocked?");
@@ -655,6 +660,7 @@ $(() => {
     ) {
       if (Math.floor(whereIsFrog / x) !== Math.floor((whereIsFrog + 1) / x)) {
         lives -= 1;
+        $("#lives").text(`${lives}`);
         if (lives > 0) {
           $(".frog").addClass("deadFrog");
           $(".deadFrog").removeClass("frog");
@@ -662,6 +668,7 @@ $(() => {
           whereIsFrog = x * (y - 1) + Math.floor(x / 2);
           $("body").removeClass(".deadFrog");
           timer = 30;
+          $("#timer").text(timer);
         } else {
           freeze();
           $("h4").text("Ooooof... The console has logged your demise!");
@@ -685,15 +692,24 @@ $(() => {
         $(".endFrog").removeClass("frog");
         $squares.eq(x * (y - 1) + Math.floor(x / 2)).addClass("frog");
         whereIsFrog = x * (y - 1) + Math.floor(x / 2);
+        timer = 30;
+        $("#timer").text(timer);
+        if ($(".endFrog").length === 5) {
+          freeze();
+          $("h4").text("Ooooof... Should have made the game harder!");
+          console.log(`Lives = ${lives}`);
+          console.log(`Home = ${$("body .endFrog").length}`);
+        }
       } else {
         freeze();
         $("h4").text("Ooooof... Should have made the game harder!");
+        console.log(`Lives = ${lives}`);
+        console.log(`Home = ${$("body .endFrog").length}`);
       }
-      console.log(`Lives = ${lives}`);
-      console.log(`Home = ${$("body .endFrog").length}`);
     } else if ($(".frog").hasClass("vehicleIsHere") === true) {
       // hit by vehicle
       lives -= 1;
+      $("#lives").text(`${lives}`);
       if (lives > 0) {
         $(".frog").addClass("deadFrog");
         $(".deadFrog").removeClass("frog");
@@ -701,6 +717,7 @@ $(() => {
         whereIsFrog = x * (y - 1) + Math.floor(x / 2);
         $("body").removeClass(".deadFrog");
         timer = 30;
+        $("#timer").text(timer);
       } else {
         freeze();
         $("h4").text("Ooooof... We're going to need a cleanup on aisle 5!");
@@ -710,6 +727,7 @@ $(() => {
     } else if (timer === 0) {
       // run out of time
       lives -= 1;
+      $("#lives").text(`${lives}`);
       if (lives > 0) {
         $(".frog").addClass("deadFrog");
         $(".deadFrog").removeClass("frog");
@@ -717,6 +735,7 @@ $(() => {
         whereIsFrog = x * (y - 1) + Math.floor(x / 2);
         $("body").removeClass(".deadFrog");
         timer = 30;
+        $("#timer").text(timer);
       } else {
         freeze();
         $("h4").text("Ooooof... Time's up!");
@@ -726,6 +745,7 @@ $(() => {
     } else if ($(".frog").hasClass("river") && !$(".frog").hasClass("float")) {
       // stepping into water
       lives -= 1;
+      $("#lives").text(`${lives}`);
       if (lives > 0) {
         $(".frog").addClass("deadFrog");
         $(".deadFrog").removeClass("frog");
@@ -733,6 +753,7 @@ $(() => {
         whereIsFrog = x * (y - 1) + Math.floor(x / 2);
         $("body").removeClass(".deadFrog");
         timer = 30;
+        $("#timer").text(timer);
       } else {
         freeze();
         $("h4").text("Ooooof... Apparently, this frog cannot swim!");
