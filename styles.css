@@ -1,15 +1,25 @@
+body {
+  background-color: black;
+}
+
 h1,
 h4 {
   text-align: center;
+  color: silver;
+}
+
+img {
+  max-width: 45px;
+  max-height: 45px;
 }
 
 #grid {
-  border: 1px black solid;
+  border: 1px silver solid;
   display: flex;
   flex-wrap: wrap;
   margin-left: auto;
   margin-right: auto;
-  background-color: burlywood;
+  box-shadow: 20px 20px 50px rgb(100, 100, 100);
 }
 
 #grid div {
@@ -18,30 +28,91 @@ h4 {
 }
 
 .end {
-  background-color: blue;
+  background-image: url("images/end.png");
+  background-size: contain;
+}
+
+.endAlt {
+  background-image: url("images/end_alt.png");
+  background-size: contain;
+}
+
+.central_divider {
+  background-image: url("images/central_divider.png");
+  background-size: cover;
+  background-color: rgb(135, 25, 238);
+}
+
+.start {
+  background-image: url("images/start.png");
+  background-size: cover;
+  background-color: rgb(135, 25, 238);
 }
 
 .road {
-  background-color: grey;
+  background-color: black;
 }
 
 .river {
-  background-color: aqua;
+  background-color: rgb(1, 0, 63);
 }
 
-.logBigIsHere,
-.logSmallIsHere {
-  background-color: brown;
+.logFront {
+  background-image: url("images/log_front.png");
+  background-size: contain;
+}
+
+.logCentre {
+  background-image: url("images/log_centre.png");
+  background-size: contain;
+}
+
+.logBack {
+  background-image: url("images/log_back.png");
+  background-size: contain;
 }
 
 .turtleIsHere {
-  background-color: lime;
+  background-image: url("images/turtle.png");
+  background-size: cover;
 }
 
 .frog {
-  background-color: green;
+  background-image: url("images/frog.png");
+  background-size: cover;
 }
 
-.vehicleIsHere {
-  background-color: black;
+.endFrog {
+  background-image: url("images/end_frog.png");
+  background-size: contain;
+}
+
+.lorryFront {
+  background-image: url("images/lorry_front.png");
+  background-size: contain;
+}
+
+.lorryBack {
+  background-image: url("images/lorry_back.png");
+  background-size: contain;
+}
+
+.carA {
+  background-image: url("images/car_a.png");
+  background-size: contain;
+}
+
+.carB {
+  background-image: url("images/car_b.png");
+  background-size: contain;
+}
+
+.carC {
+  background-image: url("images/car_c.png");
+  background-size: contain;
+}
+
+.carD {
+  background-image: url("images/car_d.png");
+  background-size: contain;
 }

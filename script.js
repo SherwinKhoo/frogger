@@ -19,10 +19,22 @@ $(() => {
 
   $("#grid").css({ width: x * a, height: y * b });
 
-  // end x-position is across the top row for now (actual game has alternate squares), y-position is always top row
+  // give all the rows a class
 
   for (let i = 0; i < x; i++) {
-    $squares.eq(i).addClass("end");
+    if (i % 2 === 1) {
+      $squares.eq(i).addClass("end");
+    } else {
+      $squares.eq(i).addClass("endAlt");
+    }
+  }
+
+  for (let i = x * Math.floor(y / 2); i < x * Math.ceil(y / 2); i++) {
+    $squares.eq(i).addClass("central_divider");
+  }
+
+  for (let i = x * (y - 1); i < x * y; i++) {
+    $squares.eq(i).addClass("start");
   }
 
   // define which rows are roads
@@ -100,11 +112,6 @@ $(() => {
       .eq(i)
       .addClass(`${i % x}`);
   }
-  // for (let i = 0; i < x; i++) {
-  //   if (i % 2 === 1) {
-  //     $squares.eq(i).addClass("end");
-  //   }
-  // }
 
   //////////////////////////////////////////////////
   //////////  movement  ////////////////////////////
@@ -118,28 +125,26 @@ $(() => {
     $squares.removeClass("frog"); //  remove id from previous position, otherwise, might as well be playing Nokia Snake instead
     switch (event.key) {
       case "ArrowUp":
-        console.log("UP");
-        if (whereIsFrog >= x) {
+        if (whereIsFrog > x && whereIsFrog < 2 * x && whereIsFrog % 2 === 0) {
+          whereIsFrog -= x;
+        } else if (whereIsFrog >= 2 * x) {
           // cannot move up if on the top row of the grid
           whereIsFrog -= x;
         }
         break; // ALWAYS REMEMBER TO BREAK!!
       case "ArrowDown":
-        console.log("DOWN");
         if (whereIsFrog < x * (y - 1)) {
           // cannot move down if on the bottom row of the grid
           whereIsFrog += x;
         }
         break; // ALWAYS REMEMBER TO BREAK!!
       case "ArrowLeft":
-        console.log("LEFT");
         if (whereIsFrog % x !== 0) {
           // cannot move left if on the leftmost column of the grid
           whereIsFrog -= 1;
         }
         break; // ALWAYS REMEMBER TO BREAK!!
       case "ArrowRight":
-        console.log("RIGHT");
         if ((whereIsFrog + 1) % x !== 0) {
           // cannot move right if on the rightmost column of the grid
           whereIsFrog += 1;
@@ -182,14 +187,14 @@ $(() => {
   let whereIsBigLog3Centre = x - 10;
   let whereIsBigLog3Back = x - 11;
 
-  let whereIsSmallLog1Front = 0;
-  let whereIsSmallLog1Back = 1;
-  let whereIsSmallLog2Front = 5;
-  let whereIsSmallLog2Back = 6;
-  let whereIsSmallLog3Front = 0 + x;
-  let whereIsSmallLog3Back = 1 + x;
-  let whereIsSmallLog4Front = 5 + x;
-  let whereIsSmallLog4Back = 6 + x;
+  let whereIsSmallLog1Front = 1;
+  let whereIsSmallLog1Back = 0;
+  let whereIsSmallLog2Front = 6;
+  let whereIsSmallLog2Back = 5;
+  let whereIsSmallLog3Front = 1 + x;
+  let whereIsSmallLog3Back = 0 + x;
+  let whereIsSmallLog4Front = 6 + x;
+  let whereIsSmallLog4Back = 5 + x;
 
   let whereIsTurtle1Front = 0;
   let whereIsTurtle1Centre = 1;
@@ -206,19 +211,14 @@ $(() => {
 
   const movementNPC = () => {
     // remove vehicles
-    $(".road").removeClass("vehicleIsHere");
+    $(".road").removeClass(
+      "vehicleIsHere lorryFront lorryBack carA carB carC carD"
+    );
 
-    // remove big logs
-    $(".river").removeClass("logBigIsHere");
-
-    // remove small logs
-    $(".river").removeClass("logSmallIsHere");
-
-    // remove turtles
-    $(".river").removeClass("turtleIsHere");
-
-    // remove float
-    $(".river").removeClass("float");
+    // remove river assets
+    $(".river").removeClass(
+      "logBigIsHere logSmallIsHere logFront logCentre logBack turtleIsHere float"
+    );
 
     // front of lorry 1
     if (whereIsLorry1Front > 0) {
@@ -226,7 +226,7 @@ $(() => {
     } else {
       whereIsLorry1Front += x;
     }
-    $(".lorry").eq(whereIsLorry1Front).addClass("vehicleIsHere");
+    $(".lorry").eq(whereIsLorry1Front).addClass("vehicleIsHere lorryFront");
 
     // back of lorry 1
     if (whereIsLorry1Back > 0) {
@@ -234,7 +234,7 @@ $(() => {
     } else {
       whereIsLorry1Back += x;
     }
-    $(".lorry").eq(whereIsLorry1Back).addClass("vehicleIsHere");
+    $(".lorry").eq(whereIsLorry1Back).addClass("vehicleIsHere lorryBack");
 
     // front of lorry 2
     if (whereIsLorry2Front > 0) {
@@ -242,7 +242,7 @@ $(() => {
     } else {
       whereIsLorry2Front += x;
     }
-    $(".lorry").eq(whereIsLorry2Front).addClass("vehicleIsHere");
+    $(".lorry").eq(whereIsLorry2Front).addClass("vehicleIsHere lorryFront");
 
     // back of lorry 2
     if (whereIsLorry2Back > 0) {
@@ -250,7 +250,7 @@ $(() => {
     } else {
       whereIsLorry2Back += x;
     }
-    $(".lorry").eq(whereIsLorry2Back).addClass("vehicleIsHere");
+    $(".lorry").eq(whereIsLorry2Back).addClass("vehicleIsHere lorryBack");
 
     // cars from the left
     if (whereIsCar1FromLeft < 2 * x) {
@@ -258,42 +258,42 @@ $(() => {
     } else {
       whereIsCar1FromLeft -= 2 * x;
     }
-    $(".left").eq(whereIsCar1FromLeft).addClass("vehicleIsHere");
+    $(".left").eq(whereIsCar1FromLeft).addClass("vehicleIsHere carA");
 
     if (whereIsCar2FromLeft < 2 * x) {
       whereIsCar2FromLeft += 1;
     } else {
       whereIsCar2FromLeft -= 2 * x;
     }
-    $(".left").eq(whereIsCar2FromLeft).addClass("vehicleIsHere");
+    $(".left").eq(whereIsCar2FromLeft).addClass("vehicleIsHere carA");
 
     if (whereIsCar3FromLeft < 2 * x) {
       whereIsCar3FromLeft += 1;
     } else {
       whereIsCar3FromLeft -= 2 * x;
     }
-    $(".left").eq(whereIsCar3FromLeft).addClass("vehicleIsHere");
+    $(".left").eq(whereIsCar3FromLeft).addClass("vehicleIsHere carA");
 
     if (whereIsCar4FromLeft < 2 * x) {
       whereIsCar4FromLeft += 1;
     } else {
       whereIsCar4FromLeft -= 2 * x;
     }
-    $(".left").eq(whereIsCar4FromLeft).addClass("vehicleIsHere");
+    $(".left").eq(whereIsCar4FromLeft).addClass("vehicleIsHere carC");
 
     if (whereIsCar5FromLeft < 2 * x) {
       whereIsCar5FromLeft += 1;
     } else {
       whereIsCar5FromLeft -= 2 * x;
     }
-    $(".left").eq(whereIsCar5FromLeft).addClass("vehicleIsHere");
+    $(".left").eq(whereIsCar5FromLeft).addClass("vehicleIsHere carC");
 
     if (whereIsCar6FromLeft < 2 * x) {
       whereIsCar6FromLeft += 1;
     } else {
       whereIsCar6FromLeft -= 2 * x;
     }
-    $(".left").eq(whereIsCar6FromLeft).addClass("vehicleIsHere");
+    $(".left").eq(whereIsCar6FromLeft).addClass("vehicleIsHere carC");
 
     // cars from the right
     if (whereIsCar1FromRight > 0) {
@@ -301,42 +301,42 @@ $(() => {
     } else {
       whereIsCar1FromRight += 2 * x;
     }
-    $(".right").eq(whereIsCar1FromRight).addClass("vehicleIsHere");
+    $(".right").eq(whereIsCar1FromRight).addClass("vehicleIsHere carB");
 
     if (whereIsCar2FromRight > 0) {
       whereIsCar2FromRight -= 1;
     } else {
       whereIsCar2FromRight += 2 * x;
     }
-    $(".right").eq(whereIsCar2FromRight).addClass("vehicleIsHere");
+    $(".right").eq(whereIsCar2FromRight).addClass("vehicleIsHere carB");
 
     if (whereIsCar3FromRight > 0) {
       whereIsCar3FromRight -= 1;
     } else {
       whereIsCar3FromRight += 2 * x;
     }
-    $(".right").eq(whereIsCar3FromRight).addClass("vehicleIsHere");
+    $(".right").eq(whereIsCar3FromRight).addClass("vehicleIsHere carB");
 
     if (whereIsCar4FromRight > 0) {
       whereIsCar4FromRight -= 1;
     } else {
       whereIsCar4FromRight += 2 * x;
     }
-    $(".right").eq(whereIsCar4FromRight).addClass("vehicleIsHere");
+    $(".right").eq(whereIsCar4FromRight).addClass("vehicleIsHere carD");
 
     if (whereIsCar5FromRight > 0) {
       whereIsCar5FromRight -= 1;
     } else {
       whereIsCar5FromRight += 2 * x;
     }
-    $(".right").eq(whereIsCar5FromRight).addClass("vehicleIsHere");
+    $(".right").eq(whereIsCar5FromRight).addClass("vehicleIsHere carD");
 
     if (whereIsCar6FromRight > 0) {
       whereIsCar6FromRight -= 1;
     } else {
       whereIsCar6FromRight += 2 * x;
     }
-    $(".right").eq(whereIsCar6FromRight).addClass("vehicleIsHere");
+    $(".right").eq(whereIsCar6FromRight).addClass("vehicleIsHere carD");
 
     // big logs
     if (whereIsBigLog1Front < x) {
@@ -344,63 +344,75 @@ $(() => {
     } else {
       whereIsBigLog1Front -= x;
     }
-    $(".bigLog").eq(whereIsBigLog1Front).addClass("logBigIsHere float");
+    $(".bigLog")
+      .eq(whereIsBigLog1Front)
+      .addClass("logBigIsHere float logFront");
 
     if (whereIsBigLog1Centre < x) {
       whereIsBigLog1Centre += 1;
     } else {
       whereIsBigLog1Centre -= x;
     }
-    $(".bigLog").eq(whereIsBigLog1Centre).addClass("logBigIsHere float");
+    $(".bigLog")
+      .eq(whereIsBigLog1Centre)
+      .addClass("logBigIsHere float logCentre");
 
     if (whereIsBigLog1Back < x) {
       whereIsBigLog1Back += 1;
     } else {
       whereIsBigLog1Back -= x;
     }
-    $(".bigLog").eq(whereIsBigLog1Back).addClass("logBigIsHere float");
+    $(".bigLog").eq(whereIsBigLog1Back).addClass("logBigIsHere float logBack");
 
     if (whereIsBigLog2Front < x) {
       whereIsBigLog2Front += 1;
     } else {
       whereIsBigLog2Front -= x;
     }
-    $(".bigLog").eq(whereIsBigLog2Front).addClass("logBigIsHere float");
+    $(".bigLog")
+      .eq(whereIsBigLog2Front)
+      .addClass("logBigIsHere float logFront");
 
     if (whereIsBigLog2Centre < x) {
       whereIsBigLog2Centre += 1;
     } else {
       whereIsBigLog2Centre -= x;
     }
-    $(".bigLog").eq(whereIsBigLog2Centre).addClass("logBigIsHere float");
+    $(".bigLog")
+      .eq(whereIsBigLog2Centre)
+      .addClass("logBigIsHere float logCentre");
 
     if (whereIsBigLog2Back < x) {
       whereIsBigLog2Back += 1;
     } else {
       whereIsBigLog2Back -= x;
     }
-    $(".bigLog").eq(whereIsBigLog2Back).addClass("logBigIsHere float");
+    $(".bigLog").eq(whereIsBigLog2Back).addClass("logBigIsHere float logBack");
 
     if (whereIsBigLog3Front < x) {
       whereIsBigLog3Front += 1;
     } else {
       whereIsBigLog3Front -= x;
     }
-    $(".bigLog").eq(whereIsBigLog3Front).addClass("logBigIsHere float");
+    $(".bigLog")
+      .eq(whereIsBigLog3Front)
+      .addClass("logBigIsHere float logFront");
 
     if (whereIsBigLog3Centre < x) {
       whereIsBigLog3Centre += 1;
     } else {
       whereIsBigLog3Centre -= x;
     }
-    $(".bigLog").eq(whereIsBigLog3Centre).addClass("logBigIsHere float");
+    $(".bigLog")
+      .eq(whereIsBigLog3Centre)
+      .addClass("logBigIsHere float logCentre");
 
     if (whereIsBigLog3Back < x) {
       whereIsBigLog3Back += 1;
     } else {
       whereIsBigLog3Back -= x;
     }
-    $(".bigLog").eq(whereIsBigLog3Back).addClass("logBigIsHere float");
+    $(".bigLog").eq(whereIsBigLog3Back).addClass("logBigIsHere float logBack");
 
     // small logs
     if (whereIsSmallLog1Front < 2 * x) {
@@ -408,56 +420,72 @@ $(() => {
     } else {
       whereIsSmallLog1Front -= 2 * x;
     }
-    $(".smallLog").eq(whereIsSmallLog1Front).addClass("logSmallIsHere float");
+    $(".smallLog")
+      .eq(whereIsSmallLog1Front)
+      .addClass("logSmallIsHere float logFront");
 
     if (whereIsSmallLog1Back < 2 * x) {
       whereIsSmallLog1Back += 1;
     } else {
       whereIsSmallLog1Back -= 2 * x;
     }
-    $(".smallLog").eq(whereIsSmallLog1Back).addClass("logSmallIsHere float");
+    $(".smallLog")
+      .eq(whereIsSmallLog1Back)
+      .addClass("logSmallIsHere float logBack");
 
     if (whereIsSmallLog2Front < 2 * x) {
       whereIsSmallLog2Front += 1;
     } else {
       whereIsSmallLog2Front -= 2 * x;
     }
-    $(".smallLog").eq(whereIsSmallLog2Front).addClass("logSmallIsHere float");
+    $(".smallLog")
+      .eq(whereIsSmallLog2Front)
+      .addClass("logSmallIsHere float logFront");
 
     if (whereIsSmallLog2Back < 2 * x) {
       whereIsSmallLog2Back += 1;
     } else {
       whereIsSmallLog2Back -= 2 * x;
     }
-    $(".smallLog").eq(whereIsSmallLog2Back).addClass("logSmallIsHere float");
+    $(".smallLog")
+      .eq(whereIsSmallLog2Back)
+      .addClass("logSmallIsHere float logBack");
 
     if (whereIsSmallLog3Front < 2 * x) {
       whereIsSmallLog3Front += 1;
     } else {
       whereIsSmallLog3Front -= 2 * x;
     }
-    $(".smallLog").eq(whereIsSmallLog3Front).addClass("logSmallIsHere float");
+    $(".smallLog")
+      .eq(whereIsSmallLog3Front)
+      .addClass("logSmallIsHere float logFront");
 
     if (whereIsSmallLog3Back < 2 * x) {
       whereIsSmallLog3Back += 1;
     } else {
       whereIsSmallLog3Back -= 2 * x;
     }
-    $(".smallLog").eq(whereIsSmallLog3Back).addClass("logSmallIsHere float");
+    $(".smallLog")
+      .eq(whereIsSmallLog3Back)
+      .addClass("logSmallIsHere float logBack");
 
     if (whereIsSmallLog4Front < 2 * x) {
       whereIsSmallLog4Front += 1;
     } else {
       whereIsSmallLog4Front -= 2 * x;
     }
-    $(".smallLog").eq(whereIsSmallLog4Front).addClass("logSmallIsHere float");
+    $(".smallLog")
+      .eq(whereIsSmallLog4Front)
+      .addClass("logSmallIsHere float logFront");
 
     if (whereIsSmallLog4Back < 2 * x) {
       whereIsSmallLog4Back += 1;
     } else {
       whereIsSmallLog4Back -= 2 * x;
     }
-    $(".smallLog").eq(whereIsSmallLog4Back).addClass("logSmallIsHere float");
+    $(".smallLog")
+      .eq(whereIsSmallLog4Back)
+      .addClass("logSmallIsHere float logBack");
 
     // turtles
     if (whereIsTurtle1Front > 0) {
@@ -573,7 +601,7 @@ $(() => {
   const countdown = () => {
     if (timer > 0) {
       timer -= 1;
-      $("span").text(timer);
+      $("#timer").text(timer);
     }
   };
 
@@ -596,7 +624,7 @@ $(() => {
       if (Math.floor(whereIsFrog / x) !== Math.floor((whereIsFrog - 1) / x)) {
         $squares.removeClass("frog");
         freeze();
-        $("h4").text("Ooooof... Shellshocked!");
+        $("h4").text("Ooooof... Feeling shellshocked?");
       } else {
         $squares.removeClass("frog");
         whereIsFrog -= 1;
@@ -614,7 +642,7 @@ $(() => {
       if (Math.floor(whereIsFrog / x) !== Math.floor((whereIsFrog + 1) / x)) {
         $squares.removeClass("frog");
         freeze();
-        $("h4").text("Ooooof... That was a hard knock!");
+        $("h4").text("Ooooof... The console has logged your demise!");
       } else {
         $squares.removeClass("frog");
         whereIsFrog += 1;
@@ -627,6 +655,8 @@ $(() => {
   const endConditions = () => {
     if ($(".frog").hasClass("end")) {
       // reach the end zone
+      $(".frog").addClass("endFrog");
+      $(".endFrog").removeClass("frog");
       freeze();
       $("h4").text("Ooooof... Should have made the game harder!");
     } else if ($(".frog").hasClass("vehicleIsHere") === true) {
@@ -643,10 +673,6 @@ $(() => {
       $("h4").text("Ooooof... Apparently, this frog cannot swim!");
     }
   };
-
-  //////////////////////////////////////////////////
-  //////////  tileset?  ////////////////////////////
-  //////////////////////////////////////////////////
 
   //////////////////////////////////////////////////
   //////////  window onload  ///////////////////////
