@@ -6,6 +6,11 @@ body {
   background-color: black;
 }
 
+div {
+  display: block;
+  margin: auto;
+}
+
 h1 {
   text-align: center;
   color: silver;

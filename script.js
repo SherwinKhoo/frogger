@@ -662,6 +662,7 @@ $(() => {
     clearInterval(itsTheEnd);
     $("body").off("keyup", movementFrog);
     $("body").removeClass(".deadFrog");
+    $(".life").empty();
   };
 
   // riding turtles
@@ -691,6 +692,14 @@ $(() => {
         whereIsFrog -= 1;
         $squares.eq(whereIsFrog).addClass("frog");
       }
+    }
+    $(".life").empty();
+    if (lives > 0) {
+      for (let i = 1; i <= lives; i++) {
+        $(".life").append(`<img src="images/frog.png" />`);
+      }
+    } else {
+      $(".life").empty();
     }
   };
 
@@ -724,6 +733,14 @@ $(() => {
         whereIsFrog += 1;
         $squares.eq(whereIsFrog).addClass("frog");
       }
+    }
+    $(".life").empty();
+    if (lives > 0) {
+      for (let i = 1; i <= lives; i++) {
+        $(".life").append(`<img src="images/frog.png" />`);
+      }
+    } else {
+      $(".life").empty();
     }
   };
 
@@ -813,6 +830,14 @@ $(() => {
       }
       console.log(`Lives = ${lives}`);
       console.log(`Home = ${$("body .endFrog").length}`);
+    }
+    $(".life").empty();
+    if (lives > 0) {
+      for (let i = 1; i <= lives; i++) {
+        $(".life").append(`<img src="images/frog.png" />`);
+      }
+    } else {
+      $(".life").empty();
     }
   };
 
