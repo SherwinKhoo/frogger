@@ -11,26 +11,36 @@
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
       crossorigin="anonymous"
     ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <h1>
-      Just another <img src="images/1f.png" /><img src="images/1r.png" /><img
-        src="images/1o.png"
-      /><img src="images/1g.png" /><img src="images/1g.png" /><img
-        src="images/1e.png"
-      /><img
+      Just another <br /><img src="images/1f.png" /><img
+        src="images/1r.png"
+      /><img src="images/1o.png" /><img src="images/1g.png" /><img
+        src="images/1g.png"
+      /><img src="images/1e.png" /><img
         src="images/1r.png
     "
-      />
+      /><br />
       clone
     </h1>
-    <h4>Timer: <span id="timer"></span></h4>
-    <h5>Lives: <span id="lives"></span></h5>
+    <div>
+      <h4>Timer: <span id="timer"></span></h4>
+    </div>
+    <div>
+      <h5>Lives: <span id="lives"></span></h5>
+    </div>
     <div id="grid"></div>
     <div id="reset">
       <button onClick="window.location.reload();">Reset</button>
     </div>
-    <div>Lives: <span id="lives"></span></div>
+    <h5>Use arrow keys to navigate.<br />Hit "reset" to start a new game.</h5>
     <script src="script.js"></script>
   </body>
 </html>

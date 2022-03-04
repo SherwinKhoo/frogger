@@ -1,12 +1,23 @@
+html {
+  font-family: "Fira Code", monospace;
+}
+
 body {
   background-color: black;
 }
 
-h1,
+h1 {
+  text-align: center;
+  color: silver;
+  font-size: 30px;
+}
 h4,
 h5 {
   text-align: center;
   color: silver;
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
 }
 
 img {
@@ -120,7 +131,7 @@ img {
 
 button {
   text-align: center;
-  margin: 50px auto;
+  margin: 15px auto;
   display: flex;
   display: grid;
 }

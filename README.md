@@ -14,7 +14,7 @@ Technologies Used
 
 Motivation
 
-1. Reinforce understanding of Javascript and CSS
+1. Reinforce understanding of Javascript, CSS and HTML.
 2. Add to portfolio.
 3. Being a "gamer, and having played computer games that someone else made since the 90s, it's nice to finally create one for a change, albeit a clone of a classic game.
 
@@ -61,16 +61,15 @@ Lessons Learnt
 Improvements for the Future
 
 1. Time bar instead of a counter.
-2. Multiple lives.
-3. New levels with additional assets.
-4. Game "paused" at the start; start triggered by player.
-5. Multi-player or against an AI trained with machine learning (recursive algorithm?).
+2. New levels with additional assets.
+3. Game "paused" at the start; start triggered by player.
+4. Multi-player or against an AI trained with machine learning (recursive algorithm?).
 
 Fair Use - This images used are valid for use under fair use.
 
 1. This project is for purely academic purposes.
 2. This project will not hinder the copyright owner's ability to sell the related product.
-3. There are many similar images (and projects using the same images) posted elsewhere.
+3. There are many similar images and audio files posted elsewhere.
 
 MIT License - Copyright (c) 2022 Sherwin Khoo
 
@@ -91,3 +90,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Sources
+
+1. Images from Wikipedia - https://en.wikipedia.org/wiki/Frogger
+2. Audio files from Classic Gaming - http://www.classicgaming.cc
+3. Audio files from MyInstants - https://www.myinstants.com/index/sg/

@@ -4,8 +4,8 @@ $(() => {
   //////////  grid  ////////////////////////////////
   //////////////////////////////////////////////////
 
-  let x = 11; // x-axis, reminder to always use odd number
-  let y = 13; // y-axis, reminder to always use odd number
+  let x = 11; // x-axis, reminder to always use odd number, between 3 to 11
+  let y = 13; // y-axis, reminder to always use odd number, between 5 to 13
 
   let a = 50; // pixel width
   let b = 40; // pixel height
@@ -112,6 +112,8 @@ $(() => {
   // https://www.w3schools.com/jquery/event_keypress.asp
 
   let whereIsFrog = x * (y - 1) + Math.floor(x / 2); //  index position in the $squares array, from 0 to (x * y)
+  // let whereIsFrog = -6; //  glitch in the matrix
+  $squares.eq(whereIsFrog).addClass("frog");
   const movementFrog = (event) => {
     $squares.removeClass("frog"); //  remove id from previous position, otherwise, might as well be playing Nokia Snake instead)
 
@@ -126,27 +128,37 @@ $(() => {
             .hasClass("endFrog")
         ) {
           whereIsFrog -= x;
+          audioJump();
+          console.log("UP");
         } else if (whereIsFrog >= 2 * x) {
           // cannot move up if on the top row of the grid
           whereIsFrog -= x;
+          audioJump();
+          console.log("UP");
         }
         break; // ALWAYS REMEMBER TO BREAK!!
       case "ArrowDown":
         if (whereIsFrog < x * (y - 1)) {
           // cannot move down if on the bottom row of the grid
           whereIsFrog += x;
+          audioJump();
+          console.log("DOWN");
         }
         break; // ALWAYS REMEMBER TO BREAK!!
       case "ArrowLeft":
         if (whereIsFrog % x !== 0) {
           // cannot move left if on the leftmost column of the grid
           whereIsFrog -= 1;
+          audioJump();
+          console.log("LEFT");
         }
         break; // ALWAYS REMEMBER TO BREAK!!
       case "ArrowRight":
         if ((whereIsFrog + 1) % x !== 0) {
           // cannot move right if on the rightmost column of the grid
           whereIsFrog += 1;
+          audioJump();
+          console.log("RIGHT");
         }
         break; // ALWAYS REMEMBER TO BREAK!!
     }
@@ -573,26 +585,6 @@ $(() => {
     $(".turtle").eq(whereIsTurtle5Back).addClass("turtleIsHere float");
   };
 
-  // const movementLorry = (index) => {
-  //   if (index > 0) {
-  //     $(".lorry").eq(index).removeClass("vehicleIsHere");
-  //     index -= 1;
-  //   } else {
-  //     index += 2 * x;
-  //   }
-  //   $(".lorry").eq(index).addClass("vehicleIsHere");
-  // };
-
-  // const movementMOVE = () => {
-  //   switch (zzz) {
-  //     case whereIsLorry1Front:
-  //     case whereIsLorry1Back:
-  //     case whereIsLorry2Front:
-  //     case whereIsLorry2Back:
-  //       return movementLorry(zzz);
-  //   }
-  // };
-
   //////////////////////////////////////////////////
   //////////  timer  ///////////////////////////////
   //////////////////////////////////////////////////
@@ -604,6 +596,57 @@ $(() => {
       timer -= 1;
       $("#timer").text(timer);
     }
+  };
+
+  //////////////////////////////////////////////////
+  //////////  lives  ///////////////////////////////
+  //////////////////////////////////////////////////
+
+  let lives = 5;
+  $("#lives").text(`${lives}`);
+
+  //////////////////////////////////////////////////
+  //////////  audio  ///////////////////////////////
+  //////////////////////////////////////////////////
+
+  const audioJump = () => {
+    let soundJump = new Audio("audio/jump.wav");
+    soundJump.play();
+  };
+
+  const audioPancake = () => {
+    let soundPancake = new Audio("audio/pancake.wav");
+    soundPancake.play();
+  };
+
+  const audioDrown = () => {
+    let soundDrown = new Audio("audio/drown.wav");
+    soundDrown.play();
+  };
+
+  const audioTime = () => {
+    let soundTime = new Audio("audio/time.wav");
+    soundTime.play();
+  };
+
+  const audioSide = () => {
+    let soundSide = new Audio("audio/side.mp3");
+    soundSide.play();
+  };
+
+  const audioHome = () => {
+    let soundHome = new Audio("audio/home.mp3");
+    soundHome.play();
+  };
+
+  const audioWin = () => {
+    let soundWin = new Audio("audio/win.mp3");
+    soundWin.play();
+  };
+
+  const audioGameOver = () => {
+    let soundGameOver = new Audio("audio/game_over.mp3");
+    soundGameOver.play();
   };
 
   //////////////////////////////////////////////////
@@ -621,16 +664,14 @@ $(() => {
     $("body").removeClass(".deadFrog");
   };
 
-  let lives = 5;
-  $("#lives").text(`${lives}`);
-
   // riding turtles
   const withTurtle = () => {
     if ($(".frog").hasClass("turtleIsHere")) {
       if (Math.floor(whereIsFrog / x) !== Math.floor((whereIsFrog - 1) / x)) {
-        lives -= 1;
-        $("#lives").text(`${lives}`);
         if (lives > 0) {
+          lives -= 1;
+          audioSide();
+          $("#lives").text(`${lives}`);
           $(".frog").addClass("deadFrog");
           $(".deadFrog").removeClass("frog");
           $squares.eq(x * (y - 1) + Math.floor(x / 2)).addClass("frog");
@@ -640,6 +681,7 @@ $(() => {
           $("#timer").text(timer);
         } else {
           freeze();
+          audioGameOver();
           $("h4").text("Ooooof... Feeling shellshocked?");
         }
         console.log(`Lives = ${lives}`);
@@ -659,9 +701,10 @@ $(() => {
       $(".frog").hasClass("logBigIsHere")
     ) {
       if (Math.floor(whereIsFrog / x) !== Math.floor((whereIsFrog + 1) / x)) {
-        lives -= 1;
-        $("#lives").text(`${lives}`);
         if (lives > 0) {
+          lives -= 1;
+          audioSide();
+          $("#lives").text(`${lives}`);
           $(".frog").addClass("deadFrog");
           $(".deadFrog").removeClass("frog");
           $squares.eq(x * (y - 1) + Math.floor(x / 2)).addClass("frog");
@@ -671,6 +714,7 @@ $(() => {
           $("#timer").text(timer);
         } else {
           freeze();
+          audioGameOver();
           $("h4").text("Ooooof... The console has logged your demise!");
         }
         console.log(`Lives = ${lives}`);
@@ -692,16 +736,19 @@ $(() => {
         $(".endFrog").removeClass("frog");
         $squares.eq(x * (y - 1) + Math.floor(x / 2)).addClass("frog");
         whereIsFrog = x * (y - 1) + Math.floor(x / 2);
+        audioHome();
         timer = 30;
         $("#timer").text(timer);
-        if ($(".endFrog").length === 5) {
+        if ($(".endFrog").length === $(".end").length - $(".endAlt").length) {
           freeze();
+          audioWin();
           $("h4").text("Ooooof... Should have made the game harder!");
           console.log(`Lives = ${lives}`);
           console.log(`Home = ${$("body .endFrog").length}`);
         }
       } else {
         freeze();
+        audioWin();
         $("h4").text("Ooooof... Should have made the game harder!");
         console.log(`Lives = ${lives}`);
         console.log(`Home = ${$("body .endFrog").length}`);
@@ -709,6 +756,7 @@ $(() => {
     } else if ($(".frog").hasClass("vehicleIsHere") === true) {
       // hit by vehicle
       lives -= 1;
+      audioPancake();
       $("#lives").text(`${lives}`);
       if (lives > 0) {
         $(".frog").addClass("deadFrog");
@@ -720,6 +768,7 @@ $(() => {
         $("#timer").text(timer);
       } else {
         freeze();
+        audioGameOver();
         $("h4").text("Ooooof... We're going to need a cleanup on aisle 5!");
       }
       console.log(`Lives = ${lives}`);
@@ -727,6 +776,7 @@ $(() => {
     } else if (timer === 0) {
       // run out of time
       lives -= 1;
+      audioTime();
       $("#lives").text(`${lives}`);
       if (lives > 0) {
         $(".frog").addClass("deadFrog");
@@ -738,6 +788,7 @@ $(() => {
         $("#timer").text(timer);
       } else {
         freeze();
+        audioGameOver();
         $("h4").text("Ooooof... Time's up!");
       }
       console.log(`Lives = ${lives}`);
@@ -745,6 +796,7 @@ $(() => {
     } else if ($(".frog").hasClass("river") && !$(".frog").hasClass("float")) {
       // stepping into water
       lives -= 1;
+      audioDrown();
       $("#lives").text(`${lives}`);
       if (lives > 0) {
         $(".frog").addClass("deadFrog");
@@ -756,6 +808,7 @@ $(() => {
         $("#timer").text(timer);
       } else {
         freeze();
+        audioGameOver();
         $("h4").text("Ooooof... Apparently, this frog cannot swim!");
       }
       console.log(`Lives = ${lives}`);
