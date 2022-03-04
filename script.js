@@ -135,6 +135,8 @@ $(() => {
           whereIsFrog -= x;
           audioJump();
           console.log("UP");
+        } else {
+          console.log("CANNOT MOVE UP");
         }
         break; // ALWAYS REMEMBER TO BREAK!!
       case "ArrowDown":
@@ -143,6 +145,8 @@ $(() => {
           whereIsFrog += x;
           audioJump();
           console.log("DOWN");
+        } else {
+          console.log("CANNOT MOVE DOWN");
         }
         break; // ALWAYS REMEMBER TO BREAK!!
       case "ArrowLeft":
@@ -151,6 +155,8 @@ $(() => {
           whereIsFrog -= 1;
           audioJump();
           console.log("LEFT");
+        } else {
+          console.log("CANNOT MOVE LEFT");
         }
         break; // ALWAYS REMEMBER TO BREAK!!
       case "ArrowRight":
@@ -159,6 +165,8 @@ $(() => {
           whereIsFrog += 1;
           audioJump();
           console.log("RIGHT");
+        } else {
+          console.log("CANNOT MOVE RIGHT");
         }
         break; // ALWAYS REMEMBER TO BREAK!!
     }
@@ -683,7 +691,7 @@ $(() => {
         } else {
           freeze();
           audioGameOver();
-          $("h4").text("Ooooof... Feeling shellshocked?");
+          $("h4").text("Feeling shellshocked?");
         }
         console.log(`Lives = ${lives}`);
         console.log(`Home = ${$("body .endFrog").length}`);
@@ -699,6 +707,7 @@ $(() => {
         $(".life").append(`<img src="images/frog.png" />`);
       }
     } else {
+      freeze();
       $(".life").empty();
     }
   };
@@ -724,7 +733,7 @@ $(() => {
         } else {
           freeze();
           audioGameOver();
-          $("h4").text("Ooooof... The console has logged your demise!");
+          $("h4").text("The console has logged your demise!");
         }
         console.log(`Lives = ${lives}`);
         console.log(`Home = ${$("body .endFrog").length}`);
@@ -740,6 +749,7 @@ $(() => {
         $(".life").append(`<img src="images/frog.png" />`);
       }
     } else {
+      freeze();
       $(".life").empty();
     }
   };
@@ -759,14 +769,14 @@ $(() => {
         if ($(".endFrog").length === $(".end").length - $(".endAlt").length) {
           freeze();
           audioWin();
-          $("h4").text("Ooooof... Should have made the game harder!");
+          $("h4").text("Should have made the game harder!");
           console.log(`Lives = ${lives}`);
           console.log(`Home = ${$("body .endFrog").length}`);
         }
       } else {
         freeze();
         audioWin();
-        $("h4").text("Ooooof... Should have made the game harder!");
+        $("h4").text("Should have made the game harder!");
         console.log(`Lives = ${lives}`);
         console.log(`Home = ${$("body .endFrog").length}`);
       }
@@ -786,7 +796,7 @@ $(() => {
       } else {
         freeze();
         audioGameOver();
-        $("h4").text("Ooooof... We're going to need a cleanup on aisle 5!");
+        $("h4").text("We're going to need a cleanup on aisle 5!");
       }
       console.log(`Lives = ${lives}`);
       console.log(`Home = ${$("body .endFrog").length}`);
@@ -806,7 +816,7 @@ $(() => {
       } else {
         freeze();
         audioGameOver();
-        $("h4").text("Ooooof... Time's up!");
+        $("h4").text("Time's up!");
       }
       console.log(`Lives = ${lives}`);
       console.log(`Home = ${$("body .endFrog").length}`);
@@ -826,7 +836,7 @@ $(() => {
       } else {
         freeze();
         audioGameOver();
-        $("h4").text("Ooooof... Apparently, this frog cannot swim!");
+        $("h4").text("Apparently, this frog cannot swim!");
       }
       console.log(`Lives = ${lives}`);
       console.log(`Home = ${$("body .endFrog").length}`);
@@ -837,9 +847,14 @@ $(() => {
         $(".life").append(`<img src="images/frog.png" />`);
       }
     } else {
+      freeze();
       $(".life").empty();
     }
   };
+
+  //////////////////////////////////////////////////
+  //////////  setInterval()  ///////////////////////
+  //////////////////////////////////////////////////
 
   $("body").on("keyup", movementFrog);
   let moveNPC = setInterval(movementNPC, 1000);

@@ -30,6 +30,10 @@ img {
   max-height: 45px;
 }
 
+.life {
+  text-align: center;
+}
+
 #grid {
   border: 1px silver solid;
   display: flex;

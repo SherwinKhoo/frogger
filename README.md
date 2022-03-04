@@ -52,6 +52,8 @@ Approach Taken
    Use **callback functions**.
    Freeze the game with **clearInterval()** when an end condition is met.
 
+8. Audio files.
+
 Lessons Learnt
 
 1. Setting initial integer values and setting limits for said values.
@@ -61,7 +63,7 @@ Lessons Learnt
 Improvements for the Future
 
 1. Time bar instead of a counter.
-2. New levels with additional assets.
+2. New levels with additional assets.woots
 3. Game "paused" at the start; start triggered by player.
 4. Multi-player or against an AI trained with machine learning (recursive algorithm?).
 
