@@ -16,7 +16,7 @@ Motivation
 
 1. Reinforce understanding of Javascript, CSS and HTML.
 2. Add to portfolio.
-3. Being a "gamer, and having played computer games that someone else made since the 90s, it's nice to finally create one for a change, albeit a clone of a classic game.
+3. Being a "gamer", and having played computer games that someone else made since the 90s, it's nice to finally create one for a change, albeit a clone of a classic game.
 
 Approach Taken
 
@@ -52,7 +52,7 @@ Approach Taken
    Use **callback functions**.
    Freeze the game with **clearInterval()** when an end condition is met.
 
-8. Audio files.
+8. Add audio files.
 
 Lessons Learnt
 
