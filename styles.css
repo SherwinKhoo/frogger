@@ -21,13 +21,14 @@ h5 {
   text-align: center;
   color: silver;
   font-size: 15px;
+  font-weight: bolder;
   margin: 0;
   padding: 0;
 }
 
 img {
-  max-width: 45px;
-  max-height: 45px;
+  max-width: calc(45px * 0.5);
+  max-height: calc(45px * 0.5);
 }
 
 .life {
