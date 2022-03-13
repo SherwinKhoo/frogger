@@ -7,8 +7,8 @@ $(() => {
   let x = 11; // x-axis, reminder to always use odd number, between 3 to 11
   let y = 13; // y-axis, reminder to always use odd number, between 5 to 13
 
-  let a = 50; // pixel width
-  let b = 40; // pixel height
+  let a = 50 * 0.75; // pixel width
+  let b = 40 * 0.75; // pixel height
 
   for (let i = 0; i < x * y; i++) {
     $("#grid").append($("<div></div>"));
@@ -20,21 +20,24 @@ $(() => {
   $("#grid").css({ width: x * a, height: y * b });
 
   // give all the rows a class
-
+  // top row always has "end" class
   for (let i = 0; i < x; i++) {
     $squares.eq(i).addClass("end");
   }
 
+  // top row grass patches always have "endAlt" class
   for (let i = 0; i < x; i++) {
     if (i % 2 === 0) {
       $squares.eq(i).addClass("endAlt");
     }
   }
 
+  // central row always has "central_divider" class
   for (let i = x * Math.floor(y / 2); i < x * Math.ceil(y / 2); i++) {
     $squares.eq(i).addClass("central_divider");
   }
 
+  // central square on the bottom row always has "start" class
   for (let i = x * (y - 1); i < x * y; i++) {
     $squares.eq(i).addClass("start");
   }
@@ -72,7 +75,6 @@ $(() => {
   }
 
   // label each square in the row to make them unique, for easier troubleshooting
-  // too many repeat codes, i know...
   for (let i = 0; i < $(".lorry").length; i++) {
     $(".lorry")
       .eq(i)
