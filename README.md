@@ -67,7 +67,7 @@ Improvements for the Future
 3. Game "paused" at the start; start triggered by player.
 4. Multi-player or against an AI trained with machine learning (recursive algorithm?).
 
-Fair Use - This images used are valid for use under fair use.
+Fair Use - This images and audio used are valid for use under fair use.
 
 1. This project is for purely academic purposes.
 2. This project will not hinder the copyright owner's ability to sell the related product.
