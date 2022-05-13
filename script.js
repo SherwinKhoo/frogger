@@ -7,8 +7,8 @@ $(() => {
   let x = 11; // x-axis, reminder to always use odd number, between 3 to 11
   let y = 13; // y-axis, reminder to always use odd number, between 5 to 13
 
-  let a = 50 * 0.75; // pixel width
-  let b = 40 * 0.75; // pixel height
+  let a = 50 * 0.6; // pixel width
+  let b = 40 * 0.6; // pixel height
 
   for (let i = 0; i < x * y; i++) {
     $("#grid").append($("<div></div>"));
@@ -54,9 +54,9 @@ $(() => {
 
   // define rows which will have vehicles
   for (let i = 0; i < $(".road").length; i++) {
-    if (i < x) {
+    if (Math.floor(i / x) % 5 === 0) {
       $(".road").eq(i).addClass("lorry"); // top row [0] has lorries moving from right
-    } else if (Math.floor(i / x) % 2 === 1) {
+    } else if (Math.floor(i / x) % 5 === 1 || Math.floor(i / x) % 5 === 3) {
       $(".road").eq(i).addClass("left"); // odd numbered rows [1] and [3] have cars moving from left
     } else {
       $(".road").eq(i).addClass("right"); // even numbered rows [2] and [4] have cars moving from right
@@ -65,9 +65,9 @@ $(() => {
 
   // define rows which will have water assets
   for (let i = 0; i < $(".river").length; i++) {
-    if (Math.floor(i / x) % 3 === 0) {
+    if (Math.floor(i / x) % 5 === 0 || Math.floor(i / x) % 5 === 3) {
       $(".river").eq(i).addClass("smallLog");
-    } else if (Math.floor(i / x) % 3 === 1) {
+    } else if (Math.floor(i / x) % 5 === 1 || Math.floor(i / x) % 5 === 4) {
       $(".river").eq(i).addClass("turtle");
     } else {
       $(".river").eq(i).addClass("bigLog");
@@ -107,6 +107,20 @@ $(() => {
   }
 
   //////////////////////////////////////////////////
+  //////////  buttons  /////////////////////////////
+  //////////////////////////////////////////////////
+
+  // $(".movementUp").append(`<button class="move" id="up"/>`);
+  // $(".movementOthers").append(`<button class="move" id="left"/>`);
+  // $(".movementOthers").append(`<button class="move" id="down"/>`);
+  // $(".movementOthers").append(`<button class="move" id="right"/>`);
+
+  // $("#up").text("UP");
+  // $("#down").text("DOWN");
+  // $("#left").text("LEFT");
+  // $("#right").text("RIGHT");
+
+  //////////////////////////////////////////////////
   //////////  movement  ////////////////////////////
   //////////////////////////////////////////////////
   // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
@@ -116,6 +130,7 @@ $(() => {
   let whereIsFrog = x * (y - 1) + Math.floor(x / 2); //  index position in the $squares array, from 0 to (x * y)
   // let whereIsFrog = -6; //  glitch in the matrix
   $squares.eq(whereIsFrog).addClass("frog");
+
   const movementFrog = (event) => {
     $squares.removeClass("frog"); //  remove id from previous position, otherwise, might as well be playing Nokia Snake instead)
 
@@ -172,8 +187,31 @@ $(() => {
         }
         break; // ALWAYS REMEMBER TO BREAK!!
     }
+
     $squares.eq(whereIsFrog).addClass("frog");
     console.log(whereIsFrog);
+  };
+
+  const handleUp = () => {
+    if (
+      whereIsFrog > x &&
+      whereIsFrog < 2 * x &&
+      whereIsFrog % 2 === 0 &&
+      !$(".end")
+        .eq(whereIsFrog - x)
+        .hasClass("endFrog")
+    ) {
+      whereIsFrog -= x;
+      audioJump();
+      console.log("UP");
+    } else if (whereIsFrog >= 2 * x) {
+      // cannot move up if on the top row of the grid
+      whereIsFrog -= x;
+      audioJump();
+      console.log("UP");
+    } else {
+      console.log("CANNOT MOVE UP");
+    }
   };
 
   //////////////////////////////////////////////////

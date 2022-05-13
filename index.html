@@ -20,6 +20,7 @@
   </head>
   <body>
     <h1>
+      <img class="title" src="images/frog.png" />
       <img class="title" src="images/1f.png" />
       <img class="title" src="images/1r.png" />
       <img class="title" src="images/1o.png" />
@@ -41,7 +42,11 @@
     <div id="reset">
       <button onClick="window.location.reload();">Reset</button>
     </div>
-    <h5>Use arrow keys to navigate.<br />Hit "reset" to start a new game.</h5>
+    <h5 class="instructions">
+      Use arrow keys to navigate.<br />Hit "reset" to start a new game.
+    </h5>
+    <div class="movementUp"></div>
+    <div class="movementOthers"></div>
     <script src="script.js"></script>
   </body>
 </html>
