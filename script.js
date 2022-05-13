@@ -107,6 +107,19 @@ $(() => {
   }
 
   //////////////////////////////////////////////////
+  //////////  title images  ////////////////////////
+  //////////////////////////////////////////////////
+
+  $(".titleImages").append(`<img class="title" src="images/frog.png" />`);
+  $(".titleImages").append(`<img class="title" src="images/1f.png" />`);
+  $(".titleImages").append(`<img class="title" src="images/1r.png" />`);
+  $(".titleImages").append(`<img class="title" src="images/1o.png" />`);
+  $(".titleImages").append(`<img class="title" src="images/1g.png" />`);
+  $(".titleImages").append(`<img class="title" src="images/1g.png" />`);
+  $(".titleImages").append(`<img class="title" src="images/1e.png" />`);
+  $(".titleImages").append(`<img class="title" src="images/1r.png" />`);
+
+  //////////////////////////////////////////////////
   //////////  buttons  /////////////////////////////
   //////////////////////////////////////////////////
 
